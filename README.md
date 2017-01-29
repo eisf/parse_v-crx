@@ -1,2 +1,2 @@
 # parse_v-crx
-怕死V (parse_v) chrome 扩展 (chrome extension: .crx). 
+怕死V chrome 扩展 (parse_v chrome extension, `.crx`). 

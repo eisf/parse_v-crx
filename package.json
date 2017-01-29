@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "browserify": "^14.0.0",
+    "coffee-script": "^1.12.3",
+    "grunt": "^1.0.1",
+    "jquery": "^3.1.1",
+    "less": "^2.7.2",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "immutable": "^3.8.1",
+    "react": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0"
+  }
+}
