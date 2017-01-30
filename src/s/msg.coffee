@@ -10,7 +10,6 @@ msg_version = '0.1.0-1'
 # send: content.js -> background.js
 # content find a supported site
 msg_type_found = 'content_found'
-
 # send: content.js -> background.js
 # content video is now playing
 msg_type_playing = 'content_playing'
@@ -18,14 +17,23 @@ msg_type_playing = 'content_playing'
 # send: background.js -> content.js (with callback)
 # get video info from content
 msg_type_get_info = 'content_get_info'
-
 # send background.js -> content.js
 # check supported site (reserved)
-msg_type_check_supported = 'content_check_supported'
-
+msg_type_check_support = 'content_check_support'
 # send background.js -> content.js
 # set video play time (current position)
 msg_type_set_time = 'content_set_time'
+
+# send popup.js -> background.js (with callback)
+# get current tab info
+msg_type_get_state = 'popup_get_state'
+# send popup.js -> background.js
+# start flush video files
+msg_type_start_flush = 'popup_start_flush'
+
+# send background.js -> popup.js
+# flush done
+msg_type_flush_done = 'popup_flush_done'
 
 
 # set listener for chrome.runtime.onMessage
@@ -68,7 +76,8 @@ send_to_content = (msg_type, data, callback, tab_id) ->
     type: msg_type
     data: data
   }
-  chrome.tabs.sendMessage tab_id, msg, null, callback
+  # FIXME
+  chrome.tabs.sendMessage tab_id, msg, callback
 
 
 module.exports = {
@@ -77,11 +86,21 @@ module.exports = {
   
   # msg types
   t: {
+    # content.js -> background.js
     found: msg_type_found
     playing: msg_type_playing
-    get_info: msg_type_get_info
-    check_supported: msg_type_check_supported
+    
+    # background.js -> content.js
+    get_info: msg_type_get_info # with callback
+    check_support: msg_type_check_support
     set_time: msg_type_set_time
+    
+    # popup.js -> background.js
+    get_state: msg_type_get_state # with callback
+    start_flush: msg_type_start_flush
+    
+    # background.js -> popup.js
+    flush_done: msg_type_flush_done
   }
   
   on: set_on_msg
