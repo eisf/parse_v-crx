@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<!--
+  dl.html, parse_v-crx/src/page/
+
+-->
+<title>下载 - 怕死V </title>
+
+<link rel="icon" type="image/png" href="../img/logo/16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="../img/logo/24.png" sizes="24x24" />
+<link rel="icon" type="image/png" href="../img/logo/32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="../img/logo/48.png" sizes="48x48" />
+<link rel="icon" type="image/png" href="../img/logo/64.png" sizes="64x64" />
+
+<script type="text/javascript" src="../lib/jquery.js" ></script>
+<link rel="stylesheet" type="text/css" href="../lib/bootstrap.css" />
+<script type="text/javascript" src="../lib/react.js" ></script>
+<script type="text/javascript" src="../lib/react-dom.js" ></script>
+<script type="text/javascript" src="../lib/react-redux.js" ></script>
+<script type="text/javascript" src="../lib/react-bootstrap.js" ></script>
+
+<style type="text/css" >
+
+html, body {
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+body {
+  font-size: 16px;
+}
+
+body {
+  background-color: rgb(10, 10, 10);
+  color: rgb(170, 170, 170);
+}
+
+#dl_main_ui, #footer {
+  padding: 0.5rem;
+}
+
+li {
+  word-break: break-all;
+}
+
+
+</style>
+</head>
+</body>
+  <!-- TODO make a better GUI with react -->
+  <div id="dl_main_ui" >
+    <img type="image/png" src="../img/logo/128.png" />
+    <h1>怕死V</h1>
+    
+    <p id="main_place_holder" >此部分 用户界面 正在初始化 .. . </p>
+  </div>
+  <div id="footer" >
+    <hr />
+    <p>若需更新信息, 请刷新本页面. </p>
+    <p>
+      说明: 目前本下载功能非常简单, 所以下载完成之前, 请不要关闭本页面. 
+      下载一旦中断, 必须从头重新开始下载. 不支持断点续传. 
+      请尽量避免在 工作不稳定 的网络下使用. 
+    </p>
+  </div>
+<!-- -->
+<script type="text/javascript" src="../js/dl.js" ></script>
+</body>
+</html>
