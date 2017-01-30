@@ -20,13 +20,53 @@
 <script type="text/javascript" src="../lib/react-dom.js" ></script>
 <script type="text/javascript" src="../lib/react-redux.js" ></script>
 <script type="text/javascript" src="../lib/react-bootstrap.js" ></script>
+
+<style type="text/css" >
+
+html, body {
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+body {
+  font-size: 16px;
+}
+
+body {
+  background-color: rgb(10, 10, 10);
+  color: rgb(170, 170, 170);
+}
+
+#dl_main_ui, #footer {
+  padding: 0.5rem;
+}
+
+li {
+  word-break: break-all;
+}
+
+
+</style>
 </head>
 </body>
-  <div id="dl_main_ui" ></div>
-  
-  <!-- FIXME TODO -->
-  <p>Hello, `dl` page ! </p>
+  <!-- TODO make a better GUI with react -->
+  <div id="dl_main_ui" >
+    <img type="image/png" src="../img/logo/128.png" />
+    <h1>怕死V</h1>
+    
+    <p id="main_place_holder" >此部分 用户界面 正在初始化 .. . </p>
+  </div>
+  <div id="footer" >
+    <hr />
+    <p>若需更新信息, 请刷新本页面. </p>
+    <p>
+      说明: 目前本下载功能非常简单, 所以下载完成之前, 请不要关闭本页面. 
+      下载一旦中断, 必须从头重新开始下载. 不支持断点续传. 
+      请尽量避免在 工作不稳定 的网络下使用. 
+    </p>
+  </div>
 <!-- -->
-</body>
 <script type="text/javascript" src="../js/dl.js" ></script>
+</body>
 </html>

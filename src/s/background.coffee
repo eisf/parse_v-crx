@@ -33,6 +33,20 @@ on_msg = (info) ->
       info.callback result
     when msg.t.start_flush
       start_flush info.data.tab_id
+    when msg.t.get_all
+      result = {}
+      for i from enable_tab_list.keys()
+        try
+          w = enable_tab_list.get i
+          result[i] = w.get_info()
+      info.callback result
+    when msg.t.get_one_file
+      {tab_id, raw} = info.data
+      if ! enable_tab_list.has tab_id
+        retrun info.callback null
+      w = enable_tab_list.get tab_id
+      result = w.get_url raw
+      info.callback result
     else
       # TODO
       log.d "background: unknow msg: type == #{info.type} "
@@ -42,6 +56,8 @@ on_tab_change = (tab_id, info, tab) ->
   # TODO
 
 on_tab_close = (tab_id, info) ->
+  return
+  # FIXME NOTE now keep data after tab close
   log.d "background: disable_tab: tab_close: tab_id == #{tab_id} "
   
   disable_tab tab_id
@@ -76,7 +92,9 @@ enable_tab = (tab_id, info) ->
   # create worker
   switch info.site
     when '271'
-      enable_tab_list.set tab_id, new m271(info)
+      w = new m271(info)
+      w.init()
+      enable_tab_list.set tab_id, w
     else
       # TODO
 
@@ -91,6 +109,7 @@ disable_tab = (tab_id) ->
   # DEBUG
   log.d "background: disable tab, id == #{tab_id}"
   
+  # FIXME this cleanup maybe not executed
   worker.cleanup?()
   # hide icon, NOTE this maybe error (close tab)
   chrome.pageAction.hide tab_id
@@ -120,12 +139,35 @@ start_flush = (tab_id) ->
   msg.send msg.t.flush_done, null
 
 
+# record http request
+on_request = (info) ->
+  o = {
+    req_id: info.requestId
+    url: info.url
+    method: info.method
+    tab_id: info.tabId
+    header: info.requestHeaders
+  }
+  # DEBUG
+  #log.d "background: http request, info == #{JSON.stringify o}"
+  
+  # feed request to m_worker
+  if enable_tab_list.has o.tab_id
+    w = enable_tab_list.get o.tab_id
+    w.on_request o
+
+
 bg_init = ->
   msg.on on_msg
   # watch tabs changes
   chrome.tabs.onRemoved.addListener on_tab_close
   chrome.tabs.onUpdated.addListener on_tab_change
   chrome.webNavigation.onCommitted.addListener on_navigation
+  
+  # TODO modify headers or URLs
+  chrome.webRequest.onSendHeaders.addListener on_request, {
+    urls: ['<all_urls>']
+  }
 
 log.d 'background init .. . '
 bg_init()

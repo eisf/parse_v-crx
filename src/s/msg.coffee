@@ -35,6 +35,13 @@ msg_type_start_flush = 'popup_start_flush'
 # flush done
 msg_type_flush_done = 'popup_flush_done'
 
+# send dl.js -> background.js (with callback)
+# get all tab (page) info
+msg_type_get_all = 'dl_get_all'
+# send dl.js -> background.js (with callback)
+# get one file url
+msg_type_get_one_file = 'dl_get_one_file'
+
 
 # set listener for chrome.runtime.onMessage
 set_on_msg = (callback) ->
@@ -101,6 +108,10 @@ module.exports = {
     
     # background.js -> popup.js
     flush_done: msg_type_flush_done
+    
+    # dl.js -> background.js
+    get_all: msg_type_get_all # with callback
+    get_one_file: msg_type_get_one_file # with callback
   }
   
   on: set_on_msg

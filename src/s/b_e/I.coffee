@@ -34,7 +34,7 @@ class I
         # video play status
         playing: false
       }
-    {
+    o = {
       playing: true
       
       # from @_info
@@ -47,12 +47,23 @@ class I
       size: @_info.size
       max_time_s: @_info.max_time_s
       
-      # TODO
+      video: {}
     }
+    o.video[@_info.size] = {
+      size: @_info.size
+      file: []
+    }
+    return o
   
   # get download url of one file
   get_url: (raw) ->
-    {}
+    raw
+  
+  # make one filename for download
+  _make_filename: (i, i_max, time_s) ->
+    m = Math.round(time_s / 60)
+    main = "#{@_info.title_video}_#{@_info.title_sub}_#{@_info.size}_#{@_info.site}_.part.#{m}min.#{i}.of.#{i_max}"
+    return main.split(' ').join('-')
 
 module.exports = I
 # end I.coffee
