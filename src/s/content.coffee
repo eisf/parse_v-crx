@@ -1,8 +1,8 @@
 # content.coffee, parse_v-crx/src/s/
 
-
-log = (text) ->
-  console.log 'parse_v-crx: content script: ' + text
+log = require './log'
+msg = require './msg'
+config = require './config'
 
 
 # check site support: site_id -> check_function
@@ -38,21 +38,34 @@ check_list = {
 check_site_support = ->
   for i of check_list
     # DEBUG
-    log "checking #{i} .. . "
+    log.c "checking #{i} .. . "
     is_support = check_list[i]()
     if is_support
-      log "[ OK ] yes! this is #{i} ;-) "
+      log.c "[ OK ] yes! this is #{i} ;-) "
+      # FIXME send msg
+      msg.send msg.t.found, {
+        site: i
+      }
     else
-      log " NO, this isn't #{i} :-( "
+      log.c " NO, this isn't #{i} :-( "
   # TODO
 
 
-_before_check_wait_s = 5
 # DEBUG
-log "wait #{_before_check_wait_s}s before check supported sites .. . "
-# FIXME
-setTimeout check_site_support, _before_check_wait_s * 1e3
+log.c "wait #{config.before_check_wait_s}s before check supported sites .. . "
+setTimeout check_site_support, config.before_check_wait_s * 1e3
 
+
+# TODO
+init_msg = ->
+  msg.on (info) ->
+    # DEBUG
+    log.c "DEBUG: got msg, type == #{info.type}, data == #{JSON.stringify info.data} "
+    
+    # TODO
+
+# TODO content_init
+init_msg()
 
 # end content.coffee
 

@@ -3,7 +3,7 @@
   "name": "parse_v-crx", 
   "short_name": "怕死V", 
   "version": "0.1.0", 
-  "version_name": "0.1.0-1", 
+  "version_name": "0.1.0-1 test20170130 1547", 
   
   "description": "怕死V chrome 扩展 ", 
   "minimum_chrome_version": "55.0", 
@@ -19,6 +19,9 @@
     "24": "img/logo/24.png", 
     "48": "img/logo/48.png"
   }, 
+  
+  "options_page": "page/dl.html", 
+  
   
   "background": {
     "page": "page/background.html", 
@@ -44,7 +47,7 @@
       ], 
       "js": [
         "lib/jquery.js", 
-        "s/content.js"
+        "js/content.js"
       ]
     }
   ], 
