@@ -59,7 +59,81 @@ render_one_tab = (tab_id, one, host) ->
     a.attr 'href', before
     li.append a
   
-  # TODO
+  create_dl_ui div, one, tab_id
+
+create_dl_ui = (div, info, tab_id) ->
+  # simple title
+  div.append $('<h3>简单下载功能</h3>')
+  # download button
+  b = $('<button type="button" >下载全部分段</button>')
+  div.append b
+  # pre: log text area
+  pre = $('<pre></pre>')
+  div.append pre
+  
+  ll = (text) ->
+    # local log
+    pre.text pre.text() + ':: ' + text + '\n'
+  
+  # TODO config
+  dl_dir_prefix = 'parse_v-crx-dl'
+  
+  f = info.video[info.size].file
+  count = {
+    # current file index
+    i: 0
+  }
+  i_max = f.length
+  
+  b.on 'click', ->
+    ll "开始下载共 #{i_max} 个文件 .. . "
+    
+    start_download()
+  
+  start_download = ->
+    # check current index
+    if count.i >= i_max
+      return ll "所有文件下载完毕 ! "
+    ll "下载第 #{count.i + 1} 个文件 "
+    
+    get_one_final_url tab_id, f[count.i]
+  
+  get_one_final_url = (tab_id, raw) ->
+    msg.send msg.t.get_one_file, {
+      tab_id: tab_id
+      raw: raw
+    }, (result) ->
+      # FIXME
+      log.d "FIXME: dl: get_one_final_url: result = #{JSON.stringify result}"
+      
+      # FIXME TODO
+      file_path = dl_dir_prefix + '/' + raw.filename
+      download_one_file result.url, file_path
+  
+  download_one_file = (file_url, file_path) ->
+    # chrome download API
+    chrome.downloads.download {
+      url: file_url
+      filename: file_path
+      conflictAction: 'uniquify'
+    }, (download_id) ->
+      ll "文件 #{file_path} 已开始下载, 等待下载完成 .. . "
+      # DEBUG
+      log.d "download start: id == #{info.id}, file_path = #{file_path}, url == #{file_url} "
+      
+      # TODO remove listeners
+      chrome.downloads.onChanged.addListener (info) ->
+        if info.id is download_id
+          # DEBUG
+          log.d "download changed: id == #{info.id}, state == #{JSON.stringify info.state} "
+          if info.state? and (info.state.current is 'complete')
+            ll "[ OK ] 文件 #{file_path} 下载完成 ! "
+            
+            download_next()
+  
+  download_next = ->
+    count.i += 1
+    start_download()
 
 
 dl_init = ->

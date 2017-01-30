@@ -63,6 +63,8 @@ set_on_msg = (callback) ->
       sender: sender
       callback: send_res
     }
+    # NOTE async callback
+    return true
 
 send_msg = (msg_type, data, callback) ->
   msg = {

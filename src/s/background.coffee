@@ -42,13 +42,21 @@ on_msg = (info) ->
       info.callback result
     when msg.t.get_one_file
       {tab_id, raw} = info.data
+      # NOTE fix a BUG here: tab_id is int type
+      tab_id = Number.parseInt tab_id
       if ! enable_tab_list.has tab_id
-        retrun info.callback null
+        # DEBUG
+        log.d "background: get_one_file: no tab_id == #{tab_id}"
+        return info.callback null
       w = enable_tab_list.get tab_id
-      result = w.get_url raw
-      info.callback result
+      # NOTE .get_url() return a Promise
+      w.get_url(raw).then( (result) ->
+        log.d "FIXME: background: get_one_file: result = #{JSON.stringify result}"
+        
+        info.callback result
+      )
+      # TODO error process
     else
-      # TODO
       log.d "background: unknow msg: type == #{info.type} "
 
 

@@ -55,8 +55,13 @@ class m271 extends I
     return o
   
   get_url: (raw) ->
-    return raw
-    # TODO
+    raw_url = raw.before
+    
+    return new Promise (resolve, reject) ->
+      $.getJSON raw_url, (data) ->
+        raw.url = data.l
+        resolve raw
+    # TODO error process
   
   _make_filename: (i, i_max, time_s) ->
     return super(i, i_max, time_s) + '.flv'
