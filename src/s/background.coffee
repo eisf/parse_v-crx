@@ -6,6 +6,9 @@ config = require './config'
 
 m271 = require './b_e/271'
 
+# FIXME TODO
+hook = require './bg/hook'
+
 
 # tab (id) of supported sites (enabled tab set)
 enable_tab_list = new Map()
@@ -164,20 +167,39 @@ on_request = (info) ->
     w = enable_tab_list.get o.tab_id
     w.on_request o
 
+# check and change request URL
+on_hook = (info) ->
+  o = {
+    req_id: info.requestId
+    url: info.url
+    method: info.method
+    tab_id: info.tabId
+    
+    # TODO add more info
+  }
+  
+  hook.check_vms o
+  # FIXME TODO
+
 
 bg_init = ->
+  log.d 'background init .. . '
+  
   msg.on on_msg
   # watch tabs changes
   chrome.tabs.onRemoved.addListener on_tab_close
   chrome.tabs.onUpdated.addListener on_tab_change
   chrome.webNavigation.onCommitted.addListener on_navigation
   
-  # TODO modify headers or URLs
   chrome.webRequest.onSendHeaders.addListener on_request, {
     urls: ['<all_urls>']
   }
+  # modify headers or URLs
+  # NOTE `blocking` here
+  chrome.webRequest.onBeforeRequest.addListener on_hook, {
+    urls: ['<all_urls>']
+  }, ['blocking']
 
-log.d 'background init .. . '
 bg_init()
 # end background.coffee
 
