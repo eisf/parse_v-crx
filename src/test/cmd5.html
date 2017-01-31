@@ -13,8 +13,8 @@ body {
   background-color: #111;
 }
 
-#flash {
-  height: 250px;
+#flash_box {
+  height: 450px;
 }
 
 </style>
@@ -37,6 +37,15 @@ body {
     </div>
   </object>
 </div>
+<script type="text/javascript" >
+
+function about() {
+  const info = JSON.parse(cmd5['about']());
+  // DEBUG print
+  console.log(JSON.stringify(info, '', '    '));
+}
+
+</script>
 <!-- -->
 </body>
 </html>
