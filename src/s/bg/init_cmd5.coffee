@@ -14,8 +14,8 @@ window.init_cmd5_core_loaded = (event_type, data) ->
 window.cmd5_calc = (raw) ->
   cmd5['xcalc'] raw
 
-# wait 5s before init
-setTimeout init_cmd5, 5 * 1e3
+# wait 2s before init
+setTimeout init_cmd5, 2 * 1e3
 
 # for DEBUG
 window.cmd5_about = ->

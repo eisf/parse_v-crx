@@ -1,14 +1,18 @@
 # I.coffee, parse_v-crx/src/s/b_e/
 # b_e: background extractor
 
+config = require '../config'
+
+
 class I
-  constructor: (raw) ->
+  constructor: (raw, tab_id) ->
     @url = raw.url
     @site = raw.site
     
     @_title = raw.title
     
     @_info = null
+    @_tab_id = tab_id
     return
   
   init: ->
@@ -64,6 +68,18 @@ class I
     m = Math.round(time_s / 60)
     main = "#{@_info.title_video}_#{@_info.title_sub}_#{@_info.size}_#{@_info.site}_.part.#{m}min.#{i}.of.#{i_max}"
     return main.split(' ').join('-')
+  
+  # default (clip) time flush method
+  flush: (set_time, done) ->
+    delta = config.flush_delta_s
+    reserve = config.flush_reserve_s
+    max_s = @_info.max_time_s
+
+    for i in [0..(max_s - reserve)] by delta
+      set_time i
+    # flush done
+    done()
+
 
 module.exports = I
 # end I.coffee

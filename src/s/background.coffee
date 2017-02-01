@@ -4,10 +4,11 @@ log = require './log'
 msg = require './msg'
 config = require './config'
 
+hook = require './bg/hook'
+early_catch = require './bg/early_catch'
+
 m271 = require './b_e/271'
 
-# FIXME TODO
-hook = require './bg/hook'
 
 
 # tab (id) of supported sites (enabled tab set)
@@ -103,7 +104,7 @@ enable_tab = (tab_id, info) ->
   # create worker
   switch info.site
     when '271'
-      w = new m271(info)
+      w = new m271(info, tab_id)
       w.init()
       enable_tab_list.set tab_id, w
     else
@@ -132,22 +133,18 @@ start_flush = (tab_id) ->
     return
   w = enable_tab_list.get tab_id
   
-  delta = config.flush_delta_s
-  reserve = config.flush_reserve_s
-  max_s = w.get_info().max_time_s
-  
-  log.d "background: start flush, tab_id == #{tab_id} "
-  
-  # TODO better flush method
-  for i in [0..(max_s - reserve)] by delta
+  set_time = (time_s) ->
     msg.send_to_content msg.t.set_time, {
-      time_s: i
+      time_s: time_s
       pause: true
     }, null, tab_id
+  done = ->
+    log.d "background: flush done. "
+    msg.send msg.t.flush_done, null
   
-  log.d "background: flush done. "
-  
-  msg.send msg.t.flush_done, null
+  log.d "background: start flush, tab_id == #{tab_id} "
+  # use worker's own time flush method
+  w.flush set_time, done
 
 
 # record http request
@@ -161,6 +158,7 @@ on_request = (info) ->
   }
   # DEBUG
   #log.d "background: http request, info == #{JSON.stringify o}"
+  early_catch.on_req o
   
   # feed request to m_worker
   if enable_tab_list.has o.tab_id
