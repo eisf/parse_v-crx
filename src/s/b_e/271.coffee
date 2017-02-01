@@ -24,8 +24,6 @@ class m271 extends I
   set_info: (info) ->
     super info
     @_video_size = info.size
-    # FIXME
-    log.d "b_e/271: set_info(), @_video_size == #{@_video_size}"
   
   on_request: (info) ->
     i = url.parse info.url, true
@@ -67,26 +65,60 @@ class m271 extends I
     # TODO error process
     return null
   
+  _get_info_file_with_vms: ->
+    r = @_get_by_current_size()
+    
+    get_key_from_raw_url = (raw) ->
+      raw.split('?')[0].split('/').pop().split('.')[0]
+    # build index from known got urls
+    s = {}
+    for i in Object.values(@_raw_url.file)
+      s[get_key_from_raw_url(i)] = i
+    # make output
+    o = []
+    for i in [0..(r.fs.length - 1)]
+      f = r.fs[i]
+      time_s = f.s / 1e3
+      
+      k = get_key_from_raw_url f.l
+      if s[k]?
+        before = s[k]
+      else
+        before = '<unknow_before_url>'
+      o.push {
+        time_s: time_s
+        before: before
+        filename: @_make_filename (i + 1), r.fs.length, time_s
+      }
+    return o
+  
   # `get_info()` with early_catch
   get_info: ->
     # check _vms
-    if (@_vms is null) or (@_video_size is null)
+    if (@_info is null) or (@_vms is null) or (@_video_size is null)
       @_try_get_vms()
       return @_old_get_info()
-    # FIXME TODO
-    return @_old_get_info()
-    
     # DEBUG
     log.d 'b_e/271: get_info(): with @_vms !'
     
-    vms = @_vms
     o = {
+      playing: true
+      site: @_info.site
+      url: @_info.url
+      title: @_info.url
+      max_time_s: @_info.max_time_s
       
-      # TODO
+      title_video: @_vms.data.vi.vn
+      title_sub: @_vms.data.vi.subt
+      size: @_video_size
+      
+      video: {}
     }
-    
-    # TODO
-    return vms
+    o.video[o.size] = {
+      size: @_video_size
+      file: @_get_info_file_with_vms()
+    }
+    return o
   
   flush: (set_time, done) ->
     if (@_vms is null) or (@_video_size is null)
@@ -117,14 +149,8 @@ class m271 extends I
           log.d "b_e/271: flush: [#{count.i}] time_s == #{t}"
           
           setTimeout start_flush, wait_s * 1e3
-          # FIXME try setTimeout first
-          log.d "FIXME: b_e/271: after setTimeout, #{wait_s}"
-          
           set_time t
         else
-          # FIXME
-          log.d "FIXME: b_e/271: flush done, i_max == #{i_max}, index = #{count.i}"
-          
           done()
       
       start_flush()
