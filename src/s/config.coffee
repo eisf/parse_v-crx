@@ -13,6 +13,9 @@ module.exports = {
   flush_delta_s: 60
   # background.js: flush: reserved seconds
   flush_reserve_s: 120
+  
+  # wait between flush video clips
+  flush_wait_s: 1
 }
 # end config.coffee
 
