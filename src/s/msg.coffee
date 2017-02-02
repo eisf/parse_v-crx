@@ -34,6 +34,8 @@ msg_type_start_flush = 'popup_start_flush'
 # send background.js -> popup.js
 # flush done
 msg_type_flush_done = 'popup_flush_done'
+# refresh page
+msg_type_popup_refresh = 'popup_refresh'
 
 # send dl.js -> background.js (with callback)
 # get all tab (page) info
@@ -53,6 +55,7 @@ set_on_msg = (callback) ->
     catch e
       # ignore this msg
       return
+    # NOTE async callback should return true
     callback {
       mark: msg.mark
       version: msg.version
@@ -63,8 +66,6 @@ set_on_msg = (callback) ->
       sender: sender
       callback: send_res
     }
-    # NOTE async callback
-    return true
 
 send_msg = (msg_type, data, callback) ->
   msg = {
@@ -110,6 +111,7 @@ module.exports = {
     
     # background.js -> popup.js
     flush_done: msg_type_flush_done
+    popup_refresh: msg_type_popup_refresh
     
     # dl.js -> background.js
     get_all: msg_type_get_all # with callback

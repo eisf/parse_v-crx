@@ -133,7 +133,6 @@ init_msg = ->
       when msg.t.get_info
         info.callback etc.m_worker.get_info()
       when msg.t.set_time
-        # TODO FIXME flash with timeout
         setTimeout( () ->
           s = info.data.time_s
           log.c "set_time, s == #{s} "
@@ -144,6 +143,7 @@ init_msg = ->
         , 0)
       else
         log.c "FIXME: unknow msg, type == #{info.type} "
+    return
 
 
 content_init = ->

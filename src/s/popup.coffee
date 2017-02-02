@@ -80,31 +80,44 @@ draw_ui = (info, tab_id) ->
     b.on 'click', ->
       start_flush tab_id, div
 
+
+etc = {
+  flush_done: null
+}
+
 start_flush = (tab_id, div) ->
-  # init msg
-  msg.on (info) ->
-    switch info.type
-      when msg.t.flush_done
-        div.append $('<hr /><p>获取分段文件, 结束. </p>')
-        b = $('<button type="button" >更多</button>')
-        div.append b
-        b.on 'click', ->
-          log.d 'open (more) window '
-          
-          window.open 'dl.html', '_blank'
-      else
-        # TODO
+  etc.flush_done = ->
+    div.append $('<hr /><p>获取分段文件, 结束. </p>')
+    b = $('<button type="button" >更多</button>')
+    div.append b
+    b.on 'click', ->
+      log.d 'open (more) window '
+      
+      window.open 'dl.html', '_blank'
   # send start_flush msg
   msg.send msg.t.start_flush, {
     tab_id: tab_id
   }
+
+init_msg = ->
+  msg.on (info) ->
+    switch info.type
+      when msg.t.popup_refresh
+        log.d 'got popup_refresh msg, now refresh .. . '
+        # refresh
+        window.location.reload()
+      when msg.t.flush_done
+        etc.flush_done()
+      else
+        log.d "unknow msg, type == #{info.type}"
+    return
 
 
 # TODO update state while popup page is open
 # TODO make a better GUI with react
 popup_init = ->
   log.d 'popup.js: start init '
-  
+  init_msg()
   get_current_tab_id()
 
 popup_init()

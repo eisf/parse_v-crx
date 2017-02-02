@@ -29,6 +29,12 @@ on_msg = (info) ->
       tab_id = info.sender.tab.id
       
       enable_tab_list.get(tab_id).set_info info.data
+      
+      # refresh popup after 1s
+      setTimeout( () ->
+        msg.send msg.t.popup_refresh, null
+        log.d "background: request popup to refresh "
+      , 1e3)
     when msg.t.get_state
       tab_id = info.data.tab_id
       if ! enable_tab_list.has tab_id
@@ -37,6 +43,8 @@ on_msg = (info) ->
       info.callback result
     when msg.t.start_flush
       start_flush info.data.tab_id
+      # NOTE async callback
+      return true
     when msg.t.get_all
       result = {}
       for i from enable_tab_list.keys()
@@ -60,8 +68,12 @@ on_msg = (info) ->
         info.callback result
       )
       # TODO error process
+      
+      # NOTE async callback
+      return true
     else
       log.d "background: unknow msg: type == #{info.type} "
+  return
 
 
 on_tab_change = (tab_id, info, tab) ->
