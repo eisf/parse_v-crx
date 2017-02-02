@@ -59,6 +59,7 @@ render_one_tab = (tab_id, one, host) ->
     a.attr 'href', before
     li.append a
   
+  create_get_addr_ui div, one, tab_id
   create_dl_ui div, one, tab_id
 
 create_dl_ui = (div, info, tab_id) ->
@@ -134,6 +135,50 @@ create_dl_ui = (div, info, tab_id) ->
   download_next = ->
     count.i += 1
     start_download()
+
+create_get_addr_ui = (div, info, tab_id) ->
+  # get_addr button
+  b = $('<button type="button" >获取全部文件下载地址</button>')
+  div.append b
+  # textarea: result
+  t = $('<textarea></textarea>')
+  d = $('<div></div>')
+  d.append t
+  div.append d
+  
+  f = info.video[info.size].file
+  count = {
+    # current file index
+    i: 0
+    first_result: true
+  }
+  i_max = f.length
+  
+  b.on 'click', ->
+    t.text '正在获取 .. . '
+    start_get()
+  
+  start_get = ->
+    # check current index
+    if count.i < i_max
+      get_one_final_url tab_id, f[count.i]
+  
+  get_one_final_url = (tab_id, raw) ->
+    msg.send msg.t.get_one_file, {
+      tab_id: tab_id
+      raw: raw
+    }, (result) ->
+      log.d "dl: get_one_final_url: result = #{JSON.stringify result}"
+      # add result
+      if count.first_result
+        count.first_result = false
+        t.text ''
+      t.text "#{t.text()}#{result.url}\n"
+      get_next()
+  
+  get_next = ->
+    count.i += 1
+    start_get()
 
 
 dl_init = ->
