@@ -105,7 +105,7 @@ class m271 extends I
       playing: true
       site: @_info.site
       url: @_info.url
-      title: @_info.url
+      title: @_info.title
       max_time_s: @_info.max_time_s
       
       title_video: @_vms.data.vi.vn

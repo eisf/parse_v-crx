@@ -29,26 +29,38 @@ body {
   overflow: auto;
 }
 
-
+/* FIXME
 body {
   background-color: rgb(10, 10, 10);
   color: rgb(200, 200, 200);
-}
+} /* */
 
 
 #popup_main_ui {
   padding: 0.5rem;
 }
 
+
+/* NOTE styles to overwrite bootstrap.css */
+
+.popup_gui {
+  padding: 0.5rem;
+}
+
+h1, .page-header {
+  margin-top: 0;
+}
+
+
 </style>
 </head>
 </body>
-  <!-- TODO make a better GUI with react .. . -->
+  <!-- react root mount point -->
   <div id="popup_main_ui" >
     <h1>怕死V</h1>
     <p id="main_init_place_holder" >此界面 正在初始化 .. . </p>
   </div>
 <!-- -->
-</body>
 <script type="text/javascript" src="../js/popup.js" ></script>
+</body>
 </html>
