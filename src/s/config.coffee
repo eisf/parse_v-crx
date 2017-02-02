@@ -16,6 +16,9 @@ module.exports = {
   
   # wait between flush video clips
   flush_wait_s: 1
+  
+  # auto flush: time before and after seconds
+  auto_flush_reserve_s: 5
 }
 # end config.coffee
 

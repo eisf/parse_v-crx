@@ -132,8 +132,10 @@ class m271 extends I
       
       get_flush_time_s = (index) ->
         {s, d} = i.fs[index]
-        # random time
-        time = s + Math.random() * d
+        # NOTE improve random time
+        rd = config.auto_flush_reserve_s
+        # random time (except time_s before and after)
+        time = s + rd * 1e3 + Math.random() * (d - rd * 1e3)
         return (time / 1e3)
       
       count = {
