@@ -3,7 +3,7 @@
   "name": "parse_v-crx", 
   "short_name": "怕死V", 
   "version": "0.1.0", 
-  "version_name": "0.1.0-8 test20170203 1833", 
+  "version_name": "0.1.0-9 test20170203 2049", 
   
   "description": "怕死V chrome 扩展 ", 
   "minimum_chrome_version": "55.0", 

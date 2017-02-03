@@ -25,7 +25,10 @@ root_reducer = ($$state, ac) ->
       $$o = $$state.set 'loading', false
       
       $$o = $$o.set 'bg_state', ac.payload
-      # TODO check already flush done
+      # NOTE check already flush done
+      if ac.payload.flush_done
+        $$o = $$o.set 'flush_done', true
+        $$o = $$o.set 'flush_doing', false
       return $$o
     when action.FLUSH
       switch ac.payload

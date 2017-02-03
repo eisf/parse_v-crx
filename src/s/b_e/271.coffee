@@ -20,6 +20,8 @@ class m271 extends I
     @_vms = null
     # current video size, eg: `1280x720`
     @_video_size = null
+    # flag: flush_done
+    @_flush_done = false
   
   set_info: (info) ->
     super info
@@ -103,6 +105,7 @@ class m271 extends I
     
     o = {
       playing: true
+      flush_done: @_flush_done
       site: @_info.site
       url: @_info.url
       title: @_info.title
@@ -143,6 +146,8 @@ class m271 extends I
       }
       i_max = i.fs.length
       
+      # FIXME
+      that = this
       start_flush = ->
         if count.i < i_max
           t = get_flush_time_s(count.i)
@@ -153,6 +158,7 @@ class m271 extends I
           setTimeout start_flush, wait_s * 1e3
           set_time t
         else
+          that._flush_done = true
           done()
       
       start_flush()
@@ -182,6 +188,7 @@ class m271 extends I
         filename: @_make_filename count, k.length, time_s
       }
       count += 1
+    o.flush_done = @_flush_done
     return o
   
   get_url: (raw) ->

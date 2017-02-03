@@ -37,9 +37,11 @@ class I
         
         # video play status
         playing: false
+        flush_done: false
       }
     o = {
       playing: true
+      flush_done: false
       
       # from @_info
       site: @_info.site
