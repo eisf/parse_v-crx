@@ -19,6 +19,12 @@ module.exports = {
   
   # auto flush: time before and after seconds
   auto_flush_reserve_s: 5
+  
+  # ffmpeg bin
+  merge_ffmpeg_bin: 'ffmpeg'
+  
+  # download dir prefix
+  dl_prefix: 'parse_v-crx-dl'
 }
 # end config.coffee
 

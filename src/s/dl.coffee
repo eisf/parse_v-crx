@@ -2,6 +2,8 @@
 
 log = require './log'
 msg = require './msg'
+config = require './config'
+merge = require './p_dl/merge'
 
 
 get_all_info = ->
@@ -76,8 +78,7 @@ create_dl_ui = (div, info, tab_id) ->
     # local log
     pre.text pre.text() + ':: ' + text + '\n'
   
-  # TODO config
-  dl_dir_prefix = 'parse_v-crx-dl'
+  dl_dir_prefix = config.dl_prefix
   
   f = info.video[info.size].file
   count = {
@@ -88,6 +89,8 @@ create_dl_ui = (div, info, tab_id) ->
   
   b.on 'click', ->
     ll "开始下载共 #{i_max} 个文件 .. . "
+    # make merge script
+    merge.gen_merge_script info, config.dl_prefix
     
     start_download()
   
@@ -104,10 +107,9 @@ create_dl_ui = (div, info, tab_id) ->
       tab_id: tab_id
       raw: raw
     }, (result) ->
-      # FIXME
-      log.d "FIXME: dl: get_one_final_url: result = #{JSON.stringify result}"
+      # DEBUG
+      log.d " dl: get_one_final_url: result = #{JSON.stringify result}"
       
-      # FIXME TODO
       file_path = dl_dir_prefix + '/' + raw.filename
       download_one_file result.url, file_path
   

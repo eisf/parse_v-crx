@@ -202,14 +202,6 @@ Popup = cC {
     (div {
         className: 'popup_gui well'
       }, 
-      # title
-      (cE PageHeader, null, 
-        '怕死V'
-        (img {
-          className: 'pull-right'
-          src: '../img/logo/64.png'
-        })
-      )
       (cE PageInfo, {
           bg_state: bg_state
           
@@ -235,6 +227,14 @@ Popup = cC {
           (cE Alert, null, 
             '请等待视频开始正常播放 .. . '
           )
+      # title at bottom
+      (cE PageHeader, null, 
+        '怕死V'
+        (img {
+          className: 'pull-right'
+          src: '../img/logo/64.png'
+        })
+      )
     )
 }
 

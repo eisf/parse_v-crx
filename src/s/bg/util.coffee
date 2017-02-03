@@ -1,5 +1,7 @@
 # util.coffee, parse_v-crx/src/s/bg/
 
+log = require '../log'
+
 
 second_to_time = (s) ->
   ns = (n) ->
@@ -20,9 +22,24 @@ second_to_time = (s) ->
     o = "#{ns h}:#{o}"
   return o
 
+download_text = (filename, text) ->
+  b = new Blob [text], {
+      type: 'text/plain'
+    }
+  file_url = URL.createObjectURL b
+  
+  chrome.downloads.download {
+      url: file_url
+      filename: filename
+      conflictAction: 'uniquify'
+  }, (download_id) ->
+    # DEBUG
+    log.d "bg/util: download_text: id #{download_id}, filename #{filename}, URL #{file_url}"
+
 
 module.exports = {
   second_to_time
+  download_text
 }
 # end util.coffee
 
