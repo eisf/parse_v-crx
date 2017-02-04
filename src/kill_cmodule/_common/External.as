@@ -14,7 +14,7 @@ package kill_cmodule._common {
     public function External(log :Log) {
       _l = log;
     }
-    public function set core(c :CoreLoader) :void {
+    public function set_loader(c :CoreLoader) :void {
       _c = c;
     }
     
@@ -23,7 +23,7 @@ package kill_cmodule._common {
     }
     // for override
     public function get version() :String {
-      return 'swf_core: kill_cmodule/_UNKNOW version 0.2.0-1 test20170205 0430';
+      return 'swf_core: kill_cmodule/_UNKNOW version 0.2.0-2 test20170205 0504';
     }
     // for override
     public function about() :Object {

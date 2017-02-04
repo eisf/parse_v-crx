@@ -9,8 +9,12 @@ package kill_cmodule.cmd5 {
     public function EI(log :Log) {
       super(log);
     }
+    public function set_core(c :Core) :void {
+      super.set_loader(c);
+      _core = c;
+    }
     public override function get version() :String {
-      return 'swf_core: kill_cmodule/cmd5 version 0.1.0-3 test20170205 0430';
+      return 'swf_core: kill_cmodule/cmd5 version 0.1.0-4 test20170205 0623';
     }
     public override function about() :Object {
       var o :Object = super.about();
@@ -25,14 +29,9 @@ package kill_cmodule.cmd5 {
       add_callback('xcalc', _ei_xcalc);
     }
     
+    // ei: export: `xcalc(raw :String) :String`
     private function _ei_xcalc(raw :String) :String {
-      return Xcalc.calc(raw, _core.f_xcalc);
-    }
-    
-    
-    public function set_core(c :Core) :void {
-      _core = c;
-      core = c;
+      return _core.xcalc(raw);
     }
   }
 }

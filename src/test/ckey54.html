@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<!--
+  ckey54.html, swf_core/src/test/
+
+-->
+<title>test: kill_cmodule/ckey54 - swf_core</title>
+<style type="text/css" >
+
+body {
+  background-color: #111;
+}
+
+#flash_box {
+  height: 450px;
+}
+
+</style>
+</head>
+<body>
+<div id="flash_box" >
+  <object id="ckey54" type="application/x-shockwave-flash" data="ckey54_main.swf" 
+    data-player-playerbody="flash" height="100%" width="100%" >
+    
+    <param name="bgcolor" value="#333333" />
+    
+    <param name="quality" value="high" />
+    <param name="allowScriptAccess" value="always" />
+    <param name="wmode" value="opaque" />
+    <param name="align" value="middle" />
+    <param name="flashVars" value="test=1&amp;debug=true" />
+    
+    <div>
+      <p>ERROR: swf not loaded</p>
+    </div>
+  </object>
+</div>
+<script type="text/javascript" >
+
+function about() {
+  const info = JSON.parse(ckey54['about']());
+  // DEBUG print
+  console.log(JSON.stringify(info, '', '    '));
+}
+
+</script>
+<!-- -->
+</body>
+</html>
+

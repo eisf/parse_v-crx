@@ -1,4 +1,4 @@
-package kill_cmodule.cmd5 {
+package kill_cmodule.ckey54 {
   import flash.utils.ByteArray;
   
   import kill_cmodule._common.Log;
@@ -9,11 +9,10 @@ package kill_cmodule.cmd5 {
   // load and call swf player core
   public class Core extends CoreLoader {
     // the swf player to load
-    [Embed(source="../../player/cmd5-1.swf", mimeType="application/octet-stream")]
+    [Embed(source="../../player/ckey54-1.swf", mimeType="application/octet-stream")]
     private static const _core_bin :Class;
     
     private var _ei :External;
-    public var f_xcalc :Function = null;
     
     
     public function Core(log :Log, ei :External) {
@@ -25,15 +24,25 @@ package kill_cmodule.cmd5 {
       return new _core_bin() as ByteArray;
     }
     protected override function _on_load_done() :void {
-      // get f_xcalc
-      f_xcalc = get_def('cmd5.xcalc') as Function;
+      // get f
+      Ckey54.instance.f_native_echo_ckeyv3 = get_def('com.tencent.encryptModule.native_echo_ckeyv3') as Function;
+      // get class
+      Ckey54.instance.c_cmodule = get_def('com.tencent.encryptModule.CModule') as Class;
       
       // TODO error process
       _ei.callback('load_core', 'OK');
     }
     
-    public function xcalc(raw :String) :String {
-      return Xcalc.calc(raw, f_xcalc);
+    // ei: rtoken
+    public function get rtoken() :String {
+      return Ckey54.instance._ck50data.rtoken;
+    }
+    public function set rtoken(text :String) :void {
+      Ckey54.instance._ck50data.rtoken = text;
+    }
+    
+    public function get_ckey(info :Object) :Object {
+      return Ckey54.instance.getCKey(info);
     }
   }
 }
