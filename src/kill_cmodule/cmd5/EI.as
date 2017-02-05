@@ -10,17 +10,18 @@ package kill_cmodule.cmd5 {
       super(log);
     }
     public function set_core(c :Core) :void {
-      super.set_loader(c);
       _core = c;
     }
     public override function get version() :String {
-      return 'swf_core: kill_cmodule/cmd5 version 0.1.0-4 test20170205 0623';
+      return 'swf_core: kill_cmodule/cmd5 version 0.2.0-1 test20170205 1604';
     }
     public override function about() :Object {
       var o :Object = super.about();
       
       o.core = 'swf/cmd5 (271)';
       o.external_interface.function_list.push('xcalc(raw :String) :String');
+      
+      o.debug['core_loaded'] = _core.loaded;
       o.debug['f_xcalc'] = '' + _core.f_xcalc;
       return o;
     }
