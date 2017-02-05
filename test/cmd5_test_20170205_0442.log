@@ -1,0 +1,72 @@
+> about
+function about() {
+  const info = JSON.parse(cmd5['about']());
+  // DEBUG print
+  console.log(JSON.stringify(info, '', '    '));
+}
+
+> about()
+2017-02-05 04:39:58.743 test_cmd5.html:45 {
+    "mark": "uuid=ee277d11-f7ba-422f-b122-13a20f5763b2",
+    "debug": {
+        "f_xcalc": "null",
+        "core_loaded": false
+    },
+    "external_interface": {
+        "event_type": [
+            "load_core"
+        ],
+        "callback_function_name": "default_callback",
+        "function_list": [
+            "about() :String // -> JSON",
+            "set_callback(callback_function_name :String) :void",
+            "load_core() :void // async, event: load_core",
+            "_callback(event_type :String, data :String) :void",
+            "xcalc(raw :String) :String"
+        ]
+    },
+    "core": "swf/cmd5 (271)",
+    "version": "swf_core: kill_cmodule/cmd5 version 0.1.0-3 test20170205 0430"
+}
+<- undefined
+
+> cmd5
+<- anonymous()
+
+> cmd5['set_callback']('my_callback')
+<- undefined
+
+> function my_callback(event_type, data) { console.log(event_type + ' --> ' + data); }
+<- undefined
+
+> cmd5['load_core']()
+<- undefined
+2017-02-05 04:41:02.989 VM1110:1 load_core --> OK
+
+> cmd5['xcalc']('0123456789abcdef')
+<- "0123456789abcdef&vf=bcd9a68744cb8c94d5722ba28a39f113"
+
+> about()
+2017-02-05 04:41:55.799 test_cmd5.html:45 {
+    "mark": "uuid=ee277d11-f7ba-422f-b122-13a20f5763b2",
+    "debug": {
+        "f_xcalc": "function Function() {}",
+        "core_loaded": true
+    },
+    "external_interface": {
+        "event_type": [
+            "load_core"
+        ],
+        "callback_function_name": "my_callback",
+        "function_list": [
+            "about() :String // -> JSON",
+            "set_callback(callback_function_name :String) :void",
+            "load_core() :void // async, event: load_core",
+            "_callback(event_type :String, data :String) :void",
+            "xcalc(raw :String) :String"
+        ]
+    },
+    "core": "swf/cmd5 (271)",
+    "version": "swf_core: kill_cmodule/cmd5 version 0.1.0-3 test20170205 0430"
+}
+<- undefined
