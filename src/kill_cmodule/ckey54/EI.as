@@ -13,12 +13,12 @@ package kill_cmodule.ckey54 {
       super(log);
     }
     public function set_core(c :Core) :void {
-      super.set_loader(c);
       _core = c;
     }
     public override function get version() :String {
-      return 'swf_core: kill_cmodule/ckey54 version 0.1.0-1 test20170205 0729';
+      return 'swf_core: kill_cmodule/ckey54 version 0.1.0-1 test20170205 1027';
     }
+    
     public override function about() :Object {
       var o :Object = super.about();
       
@@ -34,6 +34,7 @@ package kill_cmodule.ckey54 {
       
       a('get_ckey(info :String) :String // info: JSON, -> JSON');
       
+      o.debug['core_loaded'] = _core.loaded;
       o.debug['f_native_echo_ckeyv3'] = '' + Ckey54.instance.f_native_echo_ckeyv3;
       o.debug['c_cmodule'] = '' + Ckey54.instance.c_cmodule;
       return o;

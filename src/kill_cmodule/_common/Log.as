@@ -1,5 +1,6 @@
 package kill_cmodule._common {
   import flash.display.Sprite;
+  import flash.external.ExternalInterface;
   import flash.text.TextField;
   
   public class Log {
@@ -7,6 +8,8 @@ package kill_cmodule._common {
     
     private var _host :Sprite;
     private var _t :TextField;
+    // log text cache/fetch function
+    private var _cache_log_text :String = '';
     
     
     public function Log(host :Sprite) {
@@ -14,6 +17,7 @@ package kill_cmodule._common {
     }
     
     public function init() :void {
+      // FIXME
       _t = new TextField();
       _t.x = 0;
       _t.y = 0;
@@ -29,7 +33,21 @@ package kill_cmodule._common {
     
     // base text append (log) function
     private function _p(text :String) :void {
+      _cache_log_text += text;
+      // FIXME
+      trace(text);
+      if (ExternalInterface.available) {
+        ExternalInterface.call('console.log', text);
+      }
+      // FIXME
       _t.appendText(text);
+    }
+    
+    // fetch log text
+    public function fetch_log() :String {
+      var o :String = _cache_log_text;
+      _cache_log_text = '';
+      return o;
     }
     
     // raw print

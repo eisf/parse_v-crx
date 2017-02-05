@@ -1,6 +1,7 @@
 // ckey54_main.as, swf_core/src/
 package {
   import flash.display.Sprite;
+  import flash.events.Event;
   
   import kill_cmodule._common.Log;
   
@@ -21,7 +22,12 @@ package {
       _c = new Core(_l, _ei);
       _ei.set_core(_c);
       
+      _ei.addEventListener('load_core', _on_load_core);
       _ei.init();
+    }
+    
+    private function _on_load_core(e :Event) :void {
+      _c.init();
     }
   }
 }
