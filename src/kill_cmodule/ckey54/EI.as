@@ -16,7 +16,7 @@ package kill_cmodule.ckey54 {
       _core = c;
     }
     public override function get version() :String {
-      return 'swf_core: kill_cmodule/ckey54 version 0.1.0-1 test20170205 1027';
+      return 'swf_core: kill_cmodule/ckey54 version 0.1.0-2 test20170205 1503';
     }
     
     public override function about() :Object {

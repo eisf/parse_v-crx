@@ -78,6 +78,10 @@ package kill_cmodule.ckey54 {
     }
     
     public function get_ckey(info :Object) :Object {
+      // NOTE auto-set rtoken
+      if (info.rtoken != null) {
+        Ckey54.instance._ck50data.rtoken = info.rtoken;
+      }
       return Ckey54.instance.getCKey(info);
     }
   }
