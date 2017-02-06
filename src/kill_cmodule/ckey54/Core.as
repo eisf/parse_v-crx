@@ -31,7 +31,16 @@ package kill_cmodule.ckey54 {
       return _loaded;
     }
     
+    public function reset() :void {
+      _host = null;
+      _core = null;
+      _loaded = false;
+    }
+    
     public function init() :void {
+      // NOTE reset core before load (support re-load)
+      reset();
+      
       _l.d('Core: start load host .swf .. . ');
       // load host
       _host = new SwfLoader(_l);
