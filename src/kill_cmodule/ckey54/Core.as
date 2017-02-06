@@ -10,10 +10,10 @@ package kill_cmodule.ckey54 {
   // load and call swf player core
   public class Core {
     // the swf player to load
-    [Embed(source="../../player/ckey54-2.swf", mimeType="application/octet-stream")]
+    [Embed(source="../../../player/ckey54-core-4.swf", mimeType="application/octet-stream")]
     private static const _core_bin :Class;
     // NOTE should load host .swf first
-    [Embed(source="../../player/ckey54-3.swf", mimeType="application/octet-stream")]
+    [Embed(source="../../../player/ckey54-host-4.swf", mimeType="application/octet-stream")]
     private static const _host_bin :Class;
     
     private var _l :Log;

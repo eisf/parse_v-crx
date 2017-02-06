@@ -13,7 +13,7 @@ package kill_cmodule.cmd5 {
       _core = c;
     }
     public override function get version() :String {
-      return 'swf_core: kill_cmodule/cmd5 version 0.2.0-1 test20170205 1604';
+      return 'swf_core: kill_cmodule/cmd5 version 0.2.0-1 test20170206 1840';
     }
     public override function about() :Object {
       var o :Object = super.about();

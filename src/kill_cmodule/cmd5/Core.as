@@ -10,7 +10,7 @@ package kill_cmodule.cmd5 {
   // load and call swf player core
   public class Core {
     // the swf player to load
-    [Embed(source="../../player/cmd5-1.swf", mimeType="application/octet-stream")]
+    [Embed(source="../../../player/cmd5-1.swf", mimeType="application/octet-stream")]
     private static const _core_bin :Class;
     
     private var _ei :External;
